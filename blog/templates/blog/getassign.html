@@ -1,0 +1,29 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+	 {% if user.is_authenticated %}
+
+		<div class="jumbotron">
+			<h3 class="display-6">Your todo assignments</h3	>
+			<p class="lead">Please do the following assignments and submit it to your teacher in person.</p>
+			<hr class="my-4">
+			<p> You may ask the author for any help! </p>
+		</div>
+		{% for post in psts %}
+			<article class="media content-section">
+			   <img class="rounded-circle article-img" src="{{ post.post.author.profile.image.url }}">
+			  <div class="media-body">
+			    <div class="article-metadata">
+			      <a class="mr-2" href="{% url 'user-posts' post.post.author.username %}">{{ post.post.author }}</a>
+			      <small class="text-muted">{{ post.post.date_posted|date:"F d, Y" }}</small>
+			    </div>
+			    <h2><a class="article-title" href="{% url 'post-detail' post.post.id %}">{{ post.post.title }}</a></h2>
+
+			    <p class="article-content">{{ post.post.content }}</p>
+			  </div>
+			</article>
+		{% endfor %}
+	<!-- {% else %} -->
+		<h2>Login Required!</h2>
+	<!-- {% endif %} -->
+{% endblock content %}
